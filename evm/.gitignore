@@ -1,0 +1,12 @@
+# Foundry
+out/
+cache/
+broadcast/
+
+# 依赖（如果你打算用 forge install 在 CI 拉取）
+lib/
+
+# venv & 系统文件
+.venv/
+.DS_Store
+
