@@ -1,41 +1,55 @@
-[2m2025-08-25T20:59:17.451236Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/token/ERC20/ERC20.sol": No such file or directory (os error 2)
-[2m2025-08-25T20:59:17.451266Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol": No such file or directory (os error 2)
-[2m2025-08-25T20:59:17.451272Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/access/Ownable.sol": No such file or directory (os error 2)
-[2m2025-08-25T20:59:17.451277Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/utils/Pausable.sol": No such file or directory (os error 2)
-[2m2025-08-25T20:59:17.451287Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/access/Ownable.sol": No such file or directory (os error 2)
-Compiler run failed:
-Error (6275): Source "lib/openzeppelin-contracts/token/ERC20/ERC20.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
-ParserError: Source "lib/openzeppelin-contracts/token/ERC20/ERC20.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
- --> contracts/TaxedERC20.sol:4:1:
-  |
-4 | import {ERC20} from "openzeppelin-contracts/token/ERC20/ERC20.sol";
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+No files changed, compilation skipped
 
-Error (6275): Source "lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
-ParserError: Source "lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
- --> contracts/TaxedERC20.sol:5:1:
-  |
-5 | import {ERC20Permit} from "openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol";
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ran 3 tests for test/TaxedERC20.t.sol:TaxedERC20Test
+[PASS] test_pause() (gas: 70768)
+[PASS] test_taxedTransfer() (gas: 114501)
+[PASS] test_whitelistNoTax() (gas: 138557)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 4.94ms (5.15ms CPU time)
 
-Error (6275): Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
-ParserError: Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
- --> contracts/TaxedERC20.sol:6:1:
-  |
-6 | import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Ran 2 tests for test/Counter.t.sol:CounterTest
+[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 54454, ~: 54564)
+[PASS] test_Increment() (gas: 54367)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 7.11ms (5.83ms CPU time)
 
-Error (6275): Source "lib/openzeppelin-contracts/utils/Pausable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
-ParserError: Source "lib/openzeppelin-contracts/utils/Pausable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
- --> contracts/TaxedERC20.sol:7:1:
-  |
-7 | import {Pausable} from "openzeppelin-contracts/utils/Pausable.sol";
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+╭----------------------------------------+-----------------+-------+--------+-------+---------╮
+| contracts/Counter.sol:Counter Contract |                 |       |        |       |         |
++=============================================================================================+
+| Deployment Cost                        | Deployment Size |       |        |       |         |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+| 106719                                 | 278             |       |        |       |         |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+|                                        |                 |       |        |       |         |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+| Function Name                          | Min             | Avg   | Median | Max   | # Calls |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+| increment                              | 43404           | 43404 | 43404  | 43404 | 1       |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+| number                                 | 2283            | 2283  | 2283   | 2283  | 257     |
+|----------------------------------------+-----------------+-------+--------+-------+---------|
+| setNumber                              | 23582           | 43302 | 43566  | 43866 | 258     |
+╰----------------------------------------+-----------------+-------+--------+-------+---------╯
 
-Error (6275): Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
-ParserError: Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
- --> contracts/TokenFactory.sol:5:1:
-  |
-5 | import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
-  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+╭----------------------------------------------+-----------------+-------+--------+-------+---------╮
+| contracts/TaxedERC20.sol:TaxedERC20 Contract |                 |       |        |       |         |
++===================================================================================================+
+| Deployment Cost                              | Deployment Size |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| 1404600                                      | 8267            |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+|                                              |                 |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| Function Name                                | Min             | Avg   | Median | Max   | # Calls |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| balanceOf                                    | 2651            | 2651  | 2651   | 2651  | 4       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| owner                                        | 2409            | 2409  | 2409   | 2409  | 2       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| pause                                        | 27736           | 27736 | 27736  | 27736 | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| setWhitelist                                 | 47632           | 47632 | 47632  | 47632 | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| transfer                                     | 24105           | 55200 | 55942  | 85553 | 3       |
+╰----------------------------------------------+-----------------+-------+--------+-------+---------╯
 
+
+Ran 2 test suites in 13.71ms (12.05ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
