@@ -1,15 +1,17 @@
-No files changed, compilation skipped
+Compiling 25 files with Solc 0.8.24
+Solc 0.8.24 finished in 785.86ms
+Compiler run successful!
 
 Ran 3 tests for test/TaxedERC20.t.sol:TaxedERC20Test
 [PASS] test_pause() (gas: 70768)
 [PASS] test_taxedTransfer() (gas: 114501)
 [PASS] test_whitelistNoTax() (gas: 138557)
-Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 4.94ms (5.15ms CPU time)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 4.86ms (6.03ms CPU time)
 
 Ran 2 tests for test/Counter.t.sol:CounterTest
-[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 54454, ~: 54564)
+[PASS] testFuzz_SetNumber(uint256) (runs: 256, μ: 54387, ~: 54576)
 [PASS] test_Increment() (gas: 54367)
-Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 7.11ms (5.83ms CPU time)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 6.84ms (6.19ms CPU time)
 
 ╭----------------------------------------+-----------------+-------+--------+-------+---------╮
 | contracts/Counter.sol:Counter Contract |                 |       |        |       |         |
@@ -26,7 +28,7 @@ Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 7.11ms (5.83ms CPU 
 |----------------------------------------+-----------------+-------+--------+-------+---------|
 | number                                 | 2283            | 2283  | 2283   | 2283  | 257     |
 |----------------------------------------+-----------------+-------+--------+-------+---------|
-| setNumber                              | 23582           | 43302 | 43566  | 43866 | 258     |
+| setNumber                              | 23582           | 43236 | 43572  | 43866 | 258     |
 ╰----------------------------------------+-----------------+-------+--------+-------+---------╯
 
 ╭----------------------------------------------+-----------------+-------+--------+-------+---------╮
@@ -52,4 +54,4 @@ Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 7.11ms (5.83ms CPU 
 ╰----------------------------------------------+-----------------+-------+--------+-------+---------╯
 
 
-Ran 2 test suites in 13.71ms (12.05ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
+Ran 2 test suites in 12.78ms (11.69ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
