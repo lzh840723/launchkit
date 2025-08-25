@@ -1,0 +1,41 @@
+[2m2025-08-25T20:59:17.451236Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/token/ERC20/ERC20.sol": No such file or directory (os error 2)
+[2m2025-08-25T20:59:17.451266Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol": No such file or directory (os error 2)
+[2m2025-08-25T20:59:17.451272Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/access/Ownable.sol": No such file or directory (os error 2)
+[2m2025-08-25T20:59:17.451277Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/utils/Pausable.sol": No such file or directory (os error 2)
+[2m2025-08-25T20:59:17.451287Z[0m [31mERROR[0m [2mfoundry_compilers_artifacts_solc::sources[0m[2m:[0m [3merror[0m[2m=[0m"/Users/lzh/dev/launchkit/evm/lib/openzeppelin-contracts/access/Ownable.sol": No such file or directory (os error 2)
+Compiler run failed:
+Error (6275): Source "lib/openzeppelin-contracts/token/ERC20/ERC20.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ParserError: Source "lib/openzeppelin-contracts/token/ERC20/ERC20.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ --> contracts/TaxedERC20.sol:4:1:
+  |
+4 | import {ERC20} from "openzeppelin-contracts/token/ERC20/ERC20.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error (6275): Source "lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ParserError: Source "lib/openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ --> contracts/TaxedERC20.sol:5:1:
+  |
+5 | import {ERC20Permit} from "openzeppelin-contracts/token/ERC20/extensions/ERC20Permit.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error (6275): Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ParserError: Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ --> contracts/TaxedERC20.sol:6:1:
+  |
+6 | import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error (6275): Source "lib/openzeppelin-contracts/utils/Pausable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ParserError: Source "lib/openzeppelin-contracts/utils/Pausable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ --> contracts/TaxedERC20.sol:7:1:
+  |
+7 | import {Pausable} from "openzeppelin-contracts/utils/Pausable.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Error (6275): Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ParserError: Source "lib/openzeppelin-contracts/access/Ownable.sol" not found: File not found. Searched the following locations: "/Users/lzh/dev/launchkit/evm".
+ --> contracts/TokenFactory.sol:5:1:
+  |
+5 | import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
