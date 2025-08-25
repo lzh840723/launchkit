@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {TaxedERC20} from "./TaxedERC20.sol";
-import {Ownable} from "openzeppelin-contracts/access/Ownable.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TokenFactory is Ownable {
     event TokenCreated(address token, string name, string symbol);
