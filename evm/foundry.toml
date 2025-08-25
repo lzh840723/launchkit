@@ -1,6 +1,15 @@
 [profile.default]
-src = "src"
+src = "contracts"
 out = "out"
 libs = ["lib"]
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+solc_version = "0.8.24"
+evm_version  = "paris"
+optimizer = true
+optimizer_runs = 200
+
+# 可选（有助于 IDE 解析）
+remappings = [
+  "@openzeppelin/=lib/openzeppelin-contracts/",
+  "forge-std/=lib/forge-std/src/"
+]
