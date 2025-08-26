@@ -48,4 +48,40 @@ contract TaxedERC20Test is Test {
         }
         assertTrue(reverted, "transfer should revert when paused");
     }
+
+    function test_TaxDistribution() public {
+        address collector = address(0xC0FFEE);
+        TaxedERC20 token2 = new TaxedERC20(
+            "T",
+            "T",
+            1000 ether,
+            address(this),
+            200,
+            collector
+        ); // 2%
+
+        // 让第一笔 owner -> alice 免税
+        vm.prank(token2.owner());
+        token2.setWhitelist(token2.owner(), true);
+
+        // 现在 alice 可拿到完整的 100
+        token2.transfer(alice, 100 ether);
+
+        // 第二笔 alice -> bob 按 2% 扣税：bob 98，collector +2
+        vm.prank(alice);
+        token2.transfer(bob, 100 ether);
+
+        assertEq(token2.balanceOf(bob), 98 ether);
+        assertEq(token2.balanceOf(collector), 2 ether);
+    }
+
+    function test_taxedTransferFrom() public {
+        // alice -> bob 10 ether，通过 transferFrom
+        vm.prank(alice);
+        t.approve(address(this), 10 ether);
+
+        assertTrue(t.transferFrom(alice, bob, 10 ether));
+        assertEq(t.balanceOf(bob), 9.7 ether);
+        assertEq(t.balanceOf(fee), 0.3 ether);
+    }
 }
