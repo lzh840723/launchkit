@@ -1,0 +1,34 @@
+Compiling 1 files with Solc 0.8.24
+Solc 0.8.24 finished in 589.16ms
+Compiler run successful with warnings:
+Warning (2072): Unused local variable.
+  --> script/CreateOneToken.s.sol:11:9:
+   |
+11 |         address owner = vm.envAddress("OWNER");
+   |         ^^^^^^^^^^^^^
+
+Warning (2072): Unused local variable.
+  --> script/CreateOneToken.s.sol:12:9:
+   |
+12 |         TokenFactory factory = TokenFactory(factoryAddr);
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+Traces:
+  [7439] CreateOneToken::run()
+    ├─ [0] VM::startBroadcast()
+    │   └─ ← [Return]
+    ├─ [0] VM::envAddress("TOKEN_FACTORY") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envAddress("OWNER") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] console::log("NEW TOKEN:", 0x0000000000000000000000000000000000000000) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopBroadcast()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+
+Script ran successfully.
+
+== Logs ==
+  NEW TOKEN: 0x0000000000000000000000000000000000000000
