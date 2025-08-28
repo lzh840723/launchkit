@@ -13,7 +13,7 @@ No automated test pipeline or gas baseline; reviewers can’t quickly verify eng
 - Key config: `defaults.run.working-directory: evm` (tests confined to subfolder)
 
 **Screenshot**  
-![ci-green](img/ci-green.png)
+![ci-green](img/ci-green-1.png)
 
 **Links**  
 - Repo: <paste repository URL>  
@@ -23,3 +23,12 @@ No automated test pipeline or gas baseline; reviewers can’t quickly verify eng
 **Next**  
 - Show gas in Job Summary (no download needed).  
 - Add coverage artifact and Slither job (see Day5–Day9 plan).
+
+---
+
+## Screenshots
+- CI run — green with artifact  
+  ![CI run — green with artifact](img/ci-green-1.png)
+
+- CI run — alt view  
+  ![CI run — alt view](img/ci-green-2.png)
