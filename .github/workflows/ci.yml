@@ -2,9 +2,14 @@ name: ci
 
 on:
   push:
-    branches: [ "main" ]         # 如果你的默认分支不是 main，请改成相应名字
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+# 关键：所有 run 步骤在 evm/ 目录执行
+defaults:
+  run:
+    working-directory: evm
 
 jobs:
   test:
@@ -16,18 +21,21 @@ jobs:
       - name: Setup Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly       # 如需更稳定可改为 "stable"
+          version: nightly
 
       - name: Run tests
         run: forge test -vvv
 
       - name: Gas report (artifact)
+        if: always()
         run: |
           mkdir -p reports
           forge test --gas-report > reports/gas-ci.txt || true
 
       - name: Upload gas report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gas-ci
-          path: reports/gas-ci.txt
+          # 注意：artifact 的 path 相对仓库根，因此要加 evm/
+          path: evm/reports/gas-ci.txt
