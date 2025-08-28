@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# 关键：所有 run 步骤在 evm/ 目录执行
+# 所有 run 步骤在 evm/ 目录执行
 defaults:
   run:
     working-directory: evm
@@ -21,7 +21,28 @@ jobs:
       - name: Setup Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: stable   # nightly 也行；用 stable 更省心
+
+      - name: Cache forge lib
+        uses: actions/cache@v4
+        with:
+          path: evm/lib
+          key: ${{ runner.os }}-forge-lib-${{ hashFiles('evm/foundry.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-forge-lib-
+
+      - name: Install dependencies (forge-std & openzeppelin)
+        run: |
+          if [ ! -d "lib/forge-std" ] || [ ! -d "lib/openzeppelin-contracts" ]; then
+            if grep -q "^\[dependencies\]" foundry.toml 2>/dev/null; then
+              forge install --no-git
+            else
+              forge install --no-git \
+                foundry-rs/forge-std@v1.9.4 \
+                OpenZeppelin/openzeppelin-contracts@v5.0.2
+            fi
+          fi
+          ls -la lib || true
 
       - name: Run tests
         run: forge test -vvv
@@ -37,5 +58,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gas-ci
-          # 注意：artifact 的 path 相对仓库根，因此要加 evm/
           path: evm/reports/gas-ci.txt
