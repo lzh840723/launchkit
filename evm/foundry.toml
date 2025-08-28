@@ -16,10 +16,6 @@ remappings = [
 ffi = true
 fs_permissions = [{ access = "read", path = "./" }]
 
-[dependencies]
-forge-std = { git = "https://github.com/foundry-rs/forge-std", tag = "v1.9.4" }
-openzeppelin-contracts = { git = "https://github.com/OpenZeppelin/openzeppelin-contracts", tag = "v5.0.2" }
-
 [fmt]
 line_length = 100
 

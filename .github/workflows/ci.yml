@@ -23,25 +23,10 @@ jobs:
         with:
           version: nightly  
 
-      - name: Cache forge lib
-        uses: actions/cache@v4
-        with:
-          path: evm/lib
-          key: ${{ runner.os }}-forge-lib-${{ hashFiles('evm/foundry.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-forge-lib-
-
-      - name: Install dependencies (forge-std & openzeppelin)
+      - name: Install dependencies (explicit)
         run: |
-          if [ ! -d "lib/forge-std" ] || [ ! -d "lib/openzeppelin-contracts" ]; then
-            if grep -q "^\[dependencies\]" foundry.toml 2>/dev/null; then
-              forge install --no-git
-            else
-              forge install --no-git \
-                foundry-rs/forge-std@v1.9.4 \
-                OpenZeppelin/openzeppelin-contracts@v5.0.2
-            fi
-          fi
+          test -d "lib/forge-std" || forge install --no-git foundry-rs/forge-std@v1.9.4
+          test -d "lib/openzeppelin-contracts" || forge install --no-git OpenZeppelin/openzeppelin-contracts@v5.0.2
           ls -la lib || true
 
       - name: Run tests
