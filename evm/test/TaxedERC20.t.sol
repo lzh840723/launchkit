@@ -65,11 +65,11 @@ contract TaxedERC20Test is Test {
         token2.setWhitelist(token2.owner(), true);
 
         // 现在 alice 可拿到完整的 100
-        token2.transfer(alice, 100 ether);
+        assertTrue(token2.transfer(alice, 100 ether));
 
         // 第二笔 alice -> bob 按 2% 扣税：bob 98，collector +2
         vm.prank(alice);
-        token2.transfer(bob, 100 ether);
+        assertTrue(token2.transfer(bob, 100 ether));
 
         assertEq(token2.balanceOf(bob), 98 ether);
         assertEq(token2.balanceOf(collector), 2 ether);
@@ -83,5 +83,34 @@ contract TaxedERC20Test is Test {
         assertTrue(t.transferFrom(alice, bob, 10 ether));
         assertEq(t.balanceOf(bob), 9.7 ether);
         assertEq(t.balanceOf(fee), 0.3 ether);
+    }
+
+    event TaxBpsUpdated(uint16 oldBps, uint16 newBps);
+    event TaxCollectorUpdated(
+        address indexed oldCollector,
+        address indexed newCollector
+    );
+
+    function test_SetTaxBps_RevertOverCap() public {
+        vm.prank(t.owner());
+        vm.expectRevert(bytes("tax too high"));
+        t.setTaxBps(1001);
+    }
+
+    function test_SetTaxBps_And_Event() public {
+        vm.prank(t.owner());
+        vm.expectEmit(true, true, true, true);
+        emit TaxBpsUpdated(300, 500);
+        t.setTaxBps(500);
+        assertEq(t.taxBps(), 500);
+    }
+
+    function test_SetTaxCollector_And_Event() public {
+        address newCollector = address(0xABCD);
+        vm.prank(t.owner());
+        vm.expectEmit(true, true, true, true);
+        emit TaxCollectorUpdated(address(0xFEE), newCollector);
+        t.setTaxCollector(newCollector);
+        assertEq(t.taxCollector(), newCollector);
     }
 }

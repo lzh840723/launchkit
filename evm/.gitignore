@@ -1,12 +1,14 @@
-# Foundry
+# secrets
+.env
+
+# foundry build/output
 out/
 cache/
 broadcast/
 
-# 依赖（如果你打算用 forge install 在 CI 拉取）
+# deps（CI 会用 forge install 拉取）
 lib/
 
-# venv & 系统文件
-.venv/
-.DS_Store
-
+# 可选：只忽略 reports 里的大文件
+# reports/*.json
+# reports/*.zip
