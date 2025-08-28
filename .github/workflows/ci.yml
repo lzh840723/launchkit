@@ -21,7 +21,7 @@ jobs:
       - name: Setup Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: stable   # nightly 也行；用 stable 更省心
+          version: nightly  
 
       - name: Cache forge lib
         uses: actions/cache@v4
