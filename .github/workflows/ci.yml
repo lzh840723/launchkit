@@ -44,3 +44,13 @@ jobs:
         with:
           name: gas-ci
           path: evm/reports/gas-ci.txt
+
+      - name: Attach gas to summary
+        if: always()
+        run: |
+          echo '## Gas Report' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat reports/gas-ci.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
