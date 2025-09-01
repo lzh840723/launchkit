@@ -7,8 +7,11 @@ import "../contracts/TaxedERC20.sol";
 
 contract FactoryTest is Test {
     TokenFactory factory;
-    address admin     = address(this);
+    address admin = address(this);
     address collector = address(0xC0FFEE);
+
+    uint8 constant DECIMALS = 18;
+    uint256 constant TOTAL_SUPPLY = 1_000 ether;
 
     function setUp() public {
         factory = new TokenFactory(admin); // onlyOwner = admin
@@ -17,10 +20,11 @@ contract FactoryTest is Test {
     function test_CreateToken_MintsToOwner() public {
         vm.prank(admin);
         address tokenAddr = factory.createToken(
-            "Test", "T",
-            1_000 ether,
-            200,            // 2% (bps)
-            collector
+            "Test",
+            "T",
+            DECIMALS,
+            TOTAL_SUPPLY,
+            admin 
         );
         TaxedERC20 t = TaxedERC20(tokenAddr);
 
@@ -31,8 +35,8 @@ contract FactoryTest is Test {
 
     function test_OnlyOwnerCanCreate() public {
         address stranger = address(0x4444);
-        vm.expectRevert();                 // Ownable: caller is not the owner
+        vm.expectRevert(); // Ownable: caller is not the owner
         vm.prank(stranger);
-        factory.createToken("Fail", "F", 1 ether, 200, collector);
+        factory.createToken("Fail", "F", DECIMALS, 1 ether, collector);
     }
 }

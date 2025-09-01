@@ -1,30 +1,32 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
-import "forge-std/Script.sol";
+
+import {Script} from "forge-std/Script.sol";
+import {console2} from "forge-std/console2.sol";
 import {TokenFactory} from "../contracts/TokenFactory.sol";
 
 contract CreateOneToken is Script {
-    uint256 constant TOTAL_SUPPLY = 1_000_000 ether; // 100万枚（18位）
-    uint16  constant TAX_BPS      = 100;             // 1%（基点）
-
     function run() external {
-        vm.startBroadcast(); // 用与工厂 owner 相同的账户广播
+        // 从 .env 里读取 PRIVATE_KEY（Foundry 默认）
+        uint256 pk = vm.envUint("PRIVATE_KEY");
+        address owner = vm.envAddress("DEPLOYER_ADDRESS");
 
-        address factoryAddr   = vm.envAddress("TOKEN_FACTORY");
-        TokenFactory factory  = TokenFactory(factoryAddr);
+        vm.startBroadcast(pk);
 
-        // address taxCollector = vm.envAddress("TAX_COLLECTOR");
-        address taxCollector  = vm.envAddress("OWNER");
+        // 已部署的工厂地址：若你没有，就部署一个
+        address factoryAddr = vm.envOr("TOKEN_FACTORY", address(0));
+        TokenFactory factory = factoryAddr == address(0)
+            ? new TokenFactory(owner)
+            : TokenFactory(factoryAddr);
 
-        address token = factory.createToken(
-            "Niannian Token",  // name
-            "NIAN",            // symbol
-            TOTAL_SUPPLY,      // initialSupply（最小单位）
-            TAX_BPS,           // 税率（基点）
-            taxCollector       // 收税地址
-        );
+        // 演示：打开工厂（对外可调用）
+        factory.setOpen(true);
 
-        console2.log("NEW TOKEN:", token);
+        address token = factory.createToken("MyToken", "MYT", 18, 1e18, owner);
+
         vm.stopBroadcast();
+
+        console2.log("Factory:", address(factory));
+        console2.log("Token:", token);
     }
 }

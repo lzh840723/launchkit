@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "forge-std/Script.sol";
+import {Script} from "forge-std/Script.sol";
+import {console2} from "forge-std/console2.sol";
 import {TokenFactory} from "../contracts/TokenFactory.sol";
 
 contract Deploy is Script {
@@ -11,11 +12,12 @@ contract Deploy is Script {
         // 方法1：用环境变量传入
         address owner = vm.envAddress("OWNER");
 
-        // 方法2：直接写死你的地址（更简单）
-        // address owner = 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB;
-
+        // 部署合约
         TokenFactory factory = new TokenFactory(owner);
+
+        // 打印日志
         console2.log("TokenFactory re-deployed at:", address(factory));
+
 
         vm.stopBroadcast();
     }
