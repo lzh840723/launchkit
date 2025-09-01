@@ -36,3 +36,15 @@ https://youtu.be/bJQyXpvDhhg
 
 > Note: This repository is a collection of independent MVPs. The Foundry tests run **only** in the `evm/` subfolder via  
 > `defaults.run.working-directory: evm`, so other projects remain unaffected.
+
+## EVM — Evidence & CI Summary
+
+**How to view the gas summary in Actions → Summary**
+1. Open this CI run: https://github.com/lzh840723/launchkit/actions/runs/17373810940  
+2. In the **Summary** tab, scroll to the step “Run tests with gas report” — the gas table is embedded there.  
+3. At the bottom-right of the run page, download **Artifacts → gas-ci** to get the original `gas-ci.txt`.
+
+**Evidence pack**
+- Day4: [Evidence Pack](./evm/docs/evidence/day4/evidence-ci.md)
+- Day5: [Evidence Pack #1](./evm/docs/evidence/day5/pack.md)
+
