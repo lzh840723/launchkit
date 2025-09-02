@@ -1,0 +1,7 @@
+﻿2025-09-02T18:26:07.1368492Z ##[group]Run mkdir -p reports
+2025-09-02T18:26:07.1368985Z [36;1mmkdir -p reports[0m
+2025-09-02T18:26:07.1369465Z [36;1mforge test --gas-report > reports/gas-ci.txt || true[0m
+2025-09-02T18:26:07.1402743Z shell: /usr/bin/bash -e {0}
+2025-09-02T18:26:07.1402976Z ##[endgroup]
+2025-09-02T18:26:07.1500192Z Warning: This is a nightly build of Foundry. It is recommended to use the latest stable version. To mute this warning set `FOUNDRY_DISABLE_NIGHTLY_WARNING` in your environment. 
+2025-09-02T18:26:07.1501141Z 

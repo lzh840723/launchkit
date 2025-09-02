@@ -1,0 +1,31 @@
+﻿2025-09-02T18:25:56.5696542Z Current runner version: '2.328.0'
+2025-09-02T18:25:56.5729028Z ##[group]Runner Image Provisioner
+2025-09-02T18:25:56.5730363Z Hosted Compute Agent
+2025-09-02T18:25:56.5731180Z Version: 20250829.383
+2025-09-02T18:25:56.5732095Z Commit: 27cb235aab5b0e52e153a26cd86b4742e89dac5d
+2025-09-02T18:25:56.5733215Z Build Date: 2025-08-29T13:48:48Z
+2025-09-02T18:25:56.5734205Z ##[endgroup]
+2025-09-02T18:25:56.5735007Z ##[group]Operating System
+2025-09-02T18:25:56.5736128Z Ubuntu
+2025-09-02T18:25:56.5736968Z 24.04.3
+2025-09-02T18:25:56.5737653Z LTS
+2025-09-02T18:25:56.5738418Z ##[endgroup]
+2025-09-02T18:25:56.5739152Z ##[group]Runner Image
+2025-09-02T18:25:56.5740169Z Image: ubuntu-24.04
+2025-09-02T18:25:56.5741000Z Version: 20250831.1.0
+2025-09-02T18:25:56.5742654Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250831.1/images/ubuntu/Ubuntu2404-Readme.md
+2025-09-02T18:25:56.5744953Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250831.1
+2025-09-02T18:25:56.5747048Z ##[endgroup]
+2025-09-02T18:25:56.5748758Z ##[group]GITHUB_TOKEN Permissions
+2025-09-02T18:25:56.5751226Z Contents: read
+2025-09-02T18:25:56.5752048Z Metadata: read
+2025-09-02T18:25:56.5752935Z Packages: read
+2025-09-02T18:25:56.5753707Z ##[endgroup]
+2025-09-02T18:25:56.5756714Z Secret source: Actions
+2025-09-02T18:25:56.5757796Z Prepare workflow directory
+2025-09-02T18:25:56.6298026Z Prepare all required actions
+2025-09-02T18:25:56.6351501Z Getting action download info
+2025-09-02T18:25:56.9238455Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+2025-09-02T18:25:56.9927255Z Download action repository 'foundry-rs/foundry-toolchain@v1' (SHA:82dee4ba654bd2146511f85f0d013af94670c4de)
+2025-09-02T18:25:57.2905581Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-09-02T18:25:57.4724790Z Complete job name: test

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {Ownable}   from "@openzeppelin/contracts/access/Ownable.sol";
-import {SimpleERC20} from "./tokens/SimpleERC20.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {TaxedERC20} from "./TaxedERC20.sol"; // 导入 TaxedERC20
 
 // ---- Day5: custom errors（省 gas） ----
 error NameEmpty();
@@ -33,13 +33,12 @@ contract TokenFactory is Ownable {
 
     modifier onlyOwnerOrOpen() {
         if (!isOpen && msg.sender != owner()) {
-            // OZ v5 的 revert：OwnableUnauthorizedAccount(address)
             revert Ownable.OwnableUnauthorizedAccount(msg.sender);
         }
         _;
     }
 
-    /// @notice 最小可用创建：Day6 可替换为 TaxedERC20
+    /// @notice 使用 TaxedERC20 创建代币（2%税，收税地址为工厂 owner）
     function createToken(
         string memory name_,
         string memory symbol_,
@@ -47,16 +46,26 @@ contract TokenFactory is Ownable {
         uint256 initialSupply_,
         address tokenOwner_
     ) external onlyOwnerOrOpen returns (address token) {
-        // ---- Day5: 输入边界 ----
+        // ---- 输入边界检查 ----
         if (bytes(name_).length == 0) revert NameEmpty();
         if (bytes(symbol_).length == 0) revert SymbolEmpty();
-        if (bytes(symbol_).length > 11) revert SymbolTooLong();          // 11～12 皆可
+        if (bytes(symbol_).length > 11) revert SymbolTooLong();
         if (decimals_ < 6 || decimals_ > 18) revert DecimalsOutOfRange();
         if (initialSupply_ == 0) revert SupplyZero();
         if (tokenOwner_ == address(0)) revert OwnerZero();
 
-        // ---- 最小实现（Day6 可替换为你的 TaxedERC20）----
-        token = address(new SimpleERC20(name_, symbol_, decimals_, initialSupply_, tokenOwner_));
+        // ---- 切换到 TaxedERC20 ----
+        token = address(
+            new TaxedERC20(
+                name_,
+                symbol_,
+                decimals_,
+                initialSupply_,
+                tokenOwner_,
+                200,          // taxBps = 2%
+                owner()       // taxCollector = 工厂 owner
+            )
+        );
 
         emit TokenCreated(token, tokenOwner_, name_, symbol_, decimals_, initialSupply_);
     }

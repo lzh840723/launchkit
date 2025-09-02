@@ -1,0 +1,12 @@
+﻿2025-09-02T18:25:58.0189272Z ##[group]Run foundry-rs/foundry-toolchain@v1
+2025-09-02T18:25:58.0190574Z with:
+2025-09-02T18:25:58.0191339Z   version: nightly
+2025-09-02T18:25:58.0192257Z   cache: true
+2025-09-02T18:25:58.0193324Z   cache-key: test-3551503ffc5af306c949639a3e3531390f0f0b45
+2025-09-02T18:25:58.0194737Z   cache-restore-keys: test-
+2025-09-02T18:25:58.0195904Z ##[endgroup]
+2025-09-02T18:25:58.1667984Z Downloading Foundry 'nightly' from: https://github.com/foundry-rs/foundry/releases/download/nightly/foundry_nightly_linux_amd64.tar.gz
+2025-09-02T18:25:58.6953133Z [command]/usr/bin/tar xz --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/83ee3380-384e-4311-aad7-63efc836bef9 -f /home/runner/work/_temp/903f71d6-c973-4d3e-bb2e-051de151b63a
+2025-09-02T18:25:59.9041866Z Primary key: linux-foundry-chain-fork-test-3551503ffc5af306c949639a3e3531390f0f0b45
+2025-09-02T18:25:59.9043485Z Restore keys: linux-foundry-chain-fork-test-
+2025-09-02T18:25:59.9851484Z Cache not found

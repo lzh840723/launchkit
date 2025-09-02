@@ -1,0 +1,33 @@
+﻿2025-09-02T18:26:03.9928616Z ##[group]Run forge test -vvv
+2025-09-02T18:26:03.9928905Z [36;1mforge test -vvv[0m
+2025-09-02T18:26:03.9960005Z shell: /usr/bin/bash -e {0}
+2025-09-02T18:26:03.9960252Z ##[endgroup]
+2025-09-02T18:26:04.0046696Z Warning: This is a nightly build of Foundry. It is recommended to use the latest stable version. To mute this warning set `FOUNDRY_DISABLE_NIGHTLY_WARNING` in your environment. 
+2025-09-02T18:26:04.0047765Z 
+2025-09-02T18:26:04.7276409Z Compiling 60 files with Solc 0.8.24
+2025-09-02T18:26:07.0633894Z Solc 0.8.24 finished in 2.34s
+2025-09-02T18:26:07.0754545Z Compiler run successful!
+2025-09-02T18:26:07.1239889Z 
+2025-09-02T18:26:07.1240250Z Ran 2 tests for test/Factory.t.sol:FactoryTest
+2025-09-02T18:26:07.1240799Z [PASS] test_CreateToken_MintsToOwner() (gas: 1497721)
+2025-09-02T18:26:07.1241426Z [PASS] test_OnlyOwnerCanCreate() (gas: 14219)
+2025-09-02T18:26:07.1242739Z Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 922.39µs (501.08µs CPU time)
+2025-09-02T18:26:07.1243227Z 
+2025-09-02T18:26:07.1243520Z Ran 5 tests for test/TokenFactory.t.sol:TokenFactoryTest
+2025-09-02T18:26:07.1244053Z [PASS] test_Create_Success_And_Event() (gas: 1509121)
+2025-09-02T18:26:07.1244533Z [PASS] test_Revert_NameEmpty() (gas: 14429)
+2025-09-02T18:26:07.1245268Z [PASS] test_Revert_NonOwner_WhenClosed() (gas: 15164)
+2025-09-02T18:26:07.1246466Z [PASS] test_Revert_SupplyZero() (gas: 14650)
+2025-09-02T18:26:07.1247570Z [PASS] test_Revert_SymbolTooLong() (gas: 14528)
+2025-09-02T18:26:07.1248867Z Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 1.23ms (543.70µs CPU time)
+2025-09-02T18:26:07.1249329Z 
+2025-09-02T18:26:07.1249531Z Ran 6 tests for test/TaxedERC20.t.sol:TaxedERC20Test
+2025-09-02T18:26:07.1249872Z [PASS] test_Blacklist_Blocks_Transfer() (gas: 44042)
+2025-09-02T18:26:07.1250347Z [PASS] test_Decimals_And_Initial_Mint() (gas: 25401)
+2025-09-02T18:26:07.1252230Z [PASS] test_OwnerOnly_Functions_Revert_For_NonOwner() (gas: 19881)
+2025-09-02T18:26:07.1253687Z [PASS] test_Pause_Blocks_Transfer() (gas: 23728)
+2025-09-02T18:26:07.1255531Z [PASS] test_Tax_Transfer_Sends_Fee_To_Collector() (gas: 92271)
+2025-09-02T18:26:07.1257455Z [PASS] test_Whitelist_Exempts_From_Tax() (gas: 83331)
+2025-09-02T18:26:07.1259474Z Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 1.40ms (644.60µs CPU time)
+2025-09-02T18:26:07.1259987Z 
+2025-09-02T18:26:07.1260346Z Ran 3 test suites in 8.51ms (3.55ms CPU time): 13 tests passed, 0 failed, 0 skipped (13 total tests)
