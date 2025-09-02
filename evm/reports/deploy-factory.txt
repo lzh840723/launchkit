@@ -1,0 +1,54 @@
+No files changed, compilation skipped
+Traces:
+  [2283799] Deploy::run()
+    ├─ [0] VM::envUint("PRIVATE_KEY") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envAddress("OWNER") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::startBroadcast(<pk>)
+    │   └─ ← [Return]
+    ├─ [2241920] → new TokenFactory@0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c
+    │   ├─ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    │   └─ ← [Return] 11078 bytes of code
+    ├─ [0] console::log("TokenFactory re-deployed at:", TokenFactory: [0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] VM::stopBroadcast()
+    │   └─ ← [Return]
+    └─ ← [Stop]
+
+
+Script ran successfully.
+
+== Logs ==
+  TokenFactory re-deployed at: 0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c
+
+## Setting up 1 EVM.
+==========================
+Simulated On-chain Traces:
+
+  [2241920] → new TokenFactory@0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c
+    ├─ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    └─ ← [Return] 11078 bytes of code
+
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 0.258284028 gwei
+
+Estimated total gas used for script: 3208249
+
+Estimated amount required: 0.000828639474546972 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /Users/lzh/dev/launchkit/evm/broadcast/DeployTokenFactory.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /Users/lzh/dev/launchkit/evm/cache/DeployTokenFactory.s.sol/11155111/run-latest.json
+

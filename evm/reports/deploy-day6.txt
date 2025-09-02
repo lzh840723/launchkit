@@ -1,0 +1,87 @@
+No files changed, compilation skipped
+Traces:
+  [1516710] CreateOneToken::run()
+    ├─ [0] VM::envAddress("TOKEN_FACTORY") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envString("NAME") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envString("SYMBOL") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envUint("DECIMALS") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envUint("INITIAL_SUPPLY") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envAddress("TOKEN_OWNER") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::envUint("PRIVATE_KEY") [staticcall]
+    │   └─ ← [Return] <env var value>
+    ├─ [0] VM::startBroadcast(<pk>)
+    │   └─ ← [Return]
+    ├─ [1498420] 0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c::createToken("Taxed Token", "TT", 18, 1000000000000000000000000 [1e24], 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    │   ├─ [1455561] → new TaxedERC20@0x88b5DC0B57605A552716a1591b39965085cb8Eb1
+    │   │   ├─ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    │   │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB, value: 1000000000000000000000000 [1e24])
+    │   │   └─ ← [Return] 6544 bytes of code
+    │   ├─ emit TokenCreated(token: TaxedERC20: [0x88b5DC0B57605A552716a1591b39965085cb8Eb1], owner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB, name: "Taxed Token", symbol: "TT", decimals: 18, initialSupply: 1000000000000000000000000 [1e24])
+    │   └─ ← [Return] TaxedERC20: [0x88b5DC0B57605A552716a1591b39965085cb8Eb1]
+    ├─ [0] VM::stopBroadcast()
+    │   └─ ← [Return]
+    ├─ [0] console::log("Factory  :", 0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("Token    :", TaxedERC20: [0x88b5DC0B57605A552716a1591b39965085cb8Eb1]) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("Owner    :", 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("Name/Sym :", "Taxed Token", "TT") [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("Decimals :", 18) [staticcall]
+    │   └─ ← [Stop]
+    ├─ [0] console::log("Supply   :", 1000000000000000000000000 [1e24]) [staticcall]
+    │   └─ ← [Stop]
+    └─ ← [Stop]
+
+
+Script ran successfully.
+
+== Logs ==
+  Factory  : 0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c
+  Token    : 0x88b5DC0B57605A552716a1591b39965085cb8Eb1
+  Owner    : 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB
+  Name/Sym : Taxed Token TT
+  Decimals : 18
+  Supply   : 1000000000000000000000000
+
+## Setting up 1 EVM.
+==========================
+Simulated On-chain Traces:
+
+  [1498420] 0x09139374cb2aBFb3f989D1FC12F83905f01f1B5c::createToken("Taxed Token", "TT", 18, 1000000000000000000000000 [1e24], 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    ├─ [1455561] → new TaxedERC20@0x88b5DC0B57605A552716a1591b39965085cb8Eb1
+    │   ├─ emit OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB)
+    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB, value: 1000000000000000000000000 [1e24])
+    │   └─ ← [Return] 6544 bytes of code
+    ├─ emit TokenCreated(token: TaxedERC20: [0x88b5DC0B57605A552716a1591b39965085cb8Eb1], owner: 0x0297C0Df7FdB329676711B4958FEAA33aE9633aB, name: "Taxed Token", symbol: "TT", decimals: 18, initialSupply: 1000000000000000000000000 [1e24])
+    └─ ← [Return] TaxedERC20: [0x88b5DC0B57605A552716a1591b39965085cb8Eb1]
+
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 0.175820718 gwei
+
+Estimated total gas used for script: 2101123
+
+Estimated amount required: 0.000369420954466314 ETH
+
+==========================
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+
+Transactions saved to: /Users/lzh/dev/launchkit/evm/broadcast/CreateOneToken.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /Users/lzh/dev/launchkit/evm/cache/CreateOneToken.s.sol/11155111/run-latest.json
+
