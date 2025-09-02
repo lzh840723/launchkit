@@ -1,0 +1,85 @@
+﻿2025-09-02T18:25:57.5392394Z ##[group]Run actions/checkout@v4
+2025-09-02T18:25:57.5393210Z with:
+2025-09-02T18:25:57.5393628Z   repository: lzh840723/launchkit
+2025-09-02T18:25:57.5394250Z   token: ***
+2025-09-02T18:25:57.5394620Z   ssh-strict: true
+2025-09-02T18:25:57.5395009Z   ssh-user: git
+2025-09-02T18:25:57.5395396Z   persist-credentials: true
+2025-09-02T18:25:57.5396056Z   clean: true
+2025-09-02T18:25:57.5396451Z   sparse-checkout-cone-mode: true
+2025-09-02T18:25:57.5396920Z   fetch-depth: 1
+2025-09-02T18:25:57.5397289Z   fetch-tags: false
+2025-09-02T18:25:57.5397679Z   show-progress: true
+2025-09-02T18:25:57.5398088Z   lfs: false
+2025-09-02T18:25:57.5398447Z   submodules: false
+2025-09-02T18:25:57.5398839Z   set-safe-directory: true
+2025-09-02T18:25:57.5399522Z ##[endgroup]
+2025-09-02T18:25:57.6512133Z Syncing repository: lzh840723/launchkit
+2025-09-02T18:25:57.6515058Z ##[group]Getting Git version info
+2025-09-02T18:25:57.6516794Z Working directory is '/home/runner/work/launchkit/launchkit'
+2025-09-02T18:25:57.6518898Z [command]/usr/bin/git version
+2025-09-02T18:25:57.6551297Z git version 2.51.0
+2025-09-02T18:25:57.6593032Z ##[endgroup]
+2025-09-02T18:25:57.6612482Z Temporarily overriding HOME='/home/runner/work/_temp/24aa9376-8f54-4c07-94cf-d6f92c320683' before making global git config changes
+2025-09-02T18:25:57.6614310Z Adding repository directory to the temporary git global config as a safe directory
+2025-09-02T18:25:57.6619830Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/launchkit/launchkit
+2025-09-02T18:25:57.6659483Z Deleting the contents of '/home/runner/work/launchkit/launchkit'
+2025-09-02T18:25:57.6663951Z ##[group]Initializing the repository
+2025-09-02T18:25:57.6670051Z [command]/usr/bin/git init /home/runner/work/launchkit/launchkit
+2025-09-02T18:25:57.6740947Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-09-02T18:25:57.6742556Z hint: is subject to change. To configure the initial branch name to use in all
+2025-09-02T18:25:57.6743761Z hint: of your new repositories, which will suppress this warning, call:
+2025-09-02T18:25:57.6745029Z hint:
+2025-09-02T18:25:57.6745520Z hint: 	git config --global init.defaultBranch <name>
+2025-09-02T18:25:57.6746494Z hint:
+2025-09-02T18:25:57.6747044Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-09-02T18:25:57.6747922Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-09-02T18:25:57.6748585Z hint:
+2025-09-02T18:25:57.6749006Z hint: 	git branch -m <name>
+2025-09-02T18:25:57.6749688Z hint:
+2025-09-02T18:25:57.6750378Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-09-02T18:25:57.6751347Z Initialized empty Git repository in /home/runner/work/launchkit/launchkit/.git/
+2025-09-02T18:25:57.6754833Z [command]/usr/bin/git remote add origin https://github.com/lzh840723/launchkit
+2025-09-02T18:25:57.6786634Z ##[endgroup]
+2025-09-02T18:25:57.6787360Z ##[group]Disabling automatic garbage collection
+2025-09-02T18:25:57.6790420Z [command]/usr/bin/git config --local gc.auto 0
+2025-09-02T18:25:57.6817554Z ##[endgroup]
+2025-09-02T18:25:57.6818211Z ##[group]Setting up auth
+2025-09-02T18:25:57.6823985Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-09-02T18:25:57.6853061Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-09-02T18:25:57.7118843Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-09-02T18:25:57.7147300Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-09-02T18:25:57.7367486Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-09-02T18:25:57.7403295Z ##[endgroup]
+2025-09-02T18:25:57.7404446Z ##[group]Fetching the repository
+2025-09-02T18:25:57.7411807Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3551503ffc5af306c949639a3e3531390f0f0b45:refs/remotes/pull/3/merge
+2025-09-02T18:25:57.9569420Z From https://github.com/lzh840723/launchkit
+2025-09-02T18:25:57.9570509Z  * [new ref]         3551503ffc5af306c949639a3e3531390f0f0b45 -> pull/3/merge
+2025-09-02T18:25:57.9602445Z ##[endgroup]
+2025-09-02T18:25:57.9603661Z ##[group]Determining the checkout info
+2025-09-02T18:25:57.9605114Z ##[endgroup]
+2025-09-02T18:25:57.9610131Z [command]/usr/bin/git sparse-checkout disable
+2025-09-02T18:25:57.9686355Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-09-02T18:25:57.9716950Z ##[group]Checking out the ref
+2025-09-02T18:25:57.9720381Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/3/merge
+2025-09-02T18:25:57.9836953Z Note: switching to 'refs/remotes/pull/3/merge'.
+2025-09-02T18:25:57.9838709Z 
+2025-09-02T18:25:57.9839756Z You are in 'detached HEAD' state. You can look around, make experimental
+2025-09-02T18:25:57.9841775Z changes and commit them, and you can discard any commits you make in this
+2025-09-02T18:25:57.9843133Z state without impacting any branches by switching back to a branch.
+2025-09-02T18:25:57.9844106Z 
+2025-09-02T18:25:57.9844624Z If you want to create a new branch to retain commits you create, you may
+2025-09-02T18:25:57.9845933Z do so (now or later) by using -c with the switch command. Example:
+2025-09-02T18:25:57.9846630Z 
+2025-09-02T18:25:57.9846909Z   git switch -c <new-branch-name>
+2025-09-02T18:25:57.9847367Z 
+2025-09-02T18:25:57.9847626Z Or undo this operation with:
+2025-09-02T18:25:57.9848236Z 
+2025-09-02T18:25:57.9848495Z   git switch -
+2025-09-02T18:25:57.9848904Z 
+2025-09-02T18:25:57.9849533Z Turn off this advice by setting config variable advice.detachedHead to false
+2025-09-02T18:25:57.9850411Z 
+2025-09-02T18:25:57.9851392Z HEAD is now at 3551503 Merge a2d4e5975ed3355216fb874ca46aa300a1be4c99 into 200a36007edaa8b8319201a96a09e88a1ea29a3d
+2025-09-02T18:25:57.9854772Z ##[endgroup]
+2025-09-02T18:25:57.9884219Z [command]/usr/bin/git log -1 --format=%H
+2025-09-02T18:25:57.9906236Z 3551503ffc5af306c949639a3e3531390f0f0b45

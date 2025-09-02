@@ -65,3 +65,8 @@ cast call $NEW_TOKEN "owner()(address)"       --rpc-url $SEPOLIA_RPC_URL
   * **Owner-only guards** and **decimals & initial mint** checks
 
 > See `reports/gas-day6.txt` for gas stats.
+
+## CI Evidence
+- Run URL: https://github.com/lzh840723/launchkit/actions/runs/17412510720
+- Artifacts: `docs/evidence/day6/gas-ci.txt`
+- Logs: `docs/evidence/day6/ci-run.log`

@@ -1,0 +1,5 @@
+2025-09-02T18:25:52.4700000Z Requested labels: ubuntu-latest
+2025-09-02T18:25:52.4700000Z Job defined at: lzh840723/launchkit/.github/workflows/ci.yml@refs/pull/3/merge
+2025-09-02T18:25:52.4700000Z Waiting for a runner to pick up this job...
+2025-09-02T18:25:53.4730000Z Job is about to start running on the hosted runner: GitHub Actions 1000000015
+2025-09-02T18:25:53.4740000Z Job is waiting for a hosted runner to come online.
