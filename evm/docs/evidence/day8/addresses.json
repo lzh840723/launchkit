@@ -1,0 +1,11 @@
+{
+  "sepolia": {
+    "VestingVault": "<VAULT_ADDRESS>",
+    "Token": "0x88b5DC0B57605A552716a1591b39965085cb8Eb1",
+    "beneficiary": "0x0bD90fC9533cCbB0Cb2fE424cEc4C20eC30187A5",
+    "start": 1757010525,
+    "duration": 2592000,
+    "cliff": 604800,
+    "amount": "100000000000000000000"
+  }
+}

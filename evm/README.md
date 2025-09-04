@@ -98,3 +98,12 @@ script/      # Deploy scripts (factory, create-one-token)
 test/        # Foundry tests (factory + TaxedERC20)
 reports/     # Gas + deploy logs
 docs/        # Evidence packs
+
+---
+
+## Day8 — VestingVault + Minimal Frontend
+- Evidence: `evm/docs/evidence/day8/verify-links.md`
+- Addresses: `evm/docs/evidence/day8/addresses.json`
+- Transactions: `evm/docs/evidence/day8/txs.md`
+- Gas: `evm/docs/evidence/day8/gas-day8.txt`
+- Frontend: `vesting-ui/` (Connect + Releasable + Claim)
