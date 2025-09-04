@@ -57,9 +57,11 @@ contract Integration_Router_TaxedERC20 is Test {
         uint256 pBefore = token.balanceOf(platform);
         uint256 cBefore = token.balanceOf(creator);
 
+        vm.prank(alice);
+        token.setWhitelist(address(router), true); // 确保提现不再被征税
         router.withdraw(address(token));
 
-        assertEq(token.balanceOf(address(router)), 0);
+        assertEq(token.balanceOf(address(router)), 0, "router should be emptied after withdraw when router is tax-exempt");
         assertEq(token.balanceOf(platform), pBefore + fee / 2);
         assertEq(token.balanceOf(creator), cBefore + (fee - fee / 2));
     }
