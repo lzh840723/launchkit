@@ -1,0 +1,194 @@
+No files changed, compilation skipped
+
+Ran 2 tests for test/Factory.t.sol:FactoryTest
+[PASS] test_CreateToken_MintsToOwner() (gas: 1531381)
+[PASS] test_OnlyOwnerCanCreate() (gas: 36663)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 4.65ms (2.97ms CPU time)
+
+Ran 2 tests for test/FeeRouter.t.sol:FeeRouterTest
+[PASS] test_setBeneficiaries_onlyOwner() (gas: 63208)
+[PASS] test_withdraw_split50_50() (gas: 191654)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 4.72ms (686.38µs CPU time)
+
+Ran 6 tests for test/TaxedERC20.t.sol:TaxedERC20Test
+[FAIL: ERC20 transfer failed] test_Blacklist_Blocks_Transfer() (gas: 92261)
+Traces:
+  [92261] TaxedERC20Test::test_Blacklist_Blocks_Transfer()
+    ├─ [0] VM::prank(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Return]
+    ├─ [47867] TaxedERC20::setBlacklist(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916], true)
+    │   ├─ emit BlacklistSet(acct: ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916], blocked: true)
+    │   └─ ← [Stop]
+    ├─ [0] VM::expectRevert(custom error 0xf28dceb3:  Blacklisted)
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Return]
+    ├─ [26670] TaxedERC20::transfer(BOB: [0xa53b369bDCbe05dcBB96d6550C924741902d2615], 100000000000000000000 [1e20])
+    │   └─ ← [Revert] Blacklisted
+    └─ ← [Revert] ERC20 transfer failed
+
+[PASS] test_Decimals_And_Initial_Mint() (gas: 36401)
+[PASS] test_OwnerOnly_Functions_Revert_For_NonOwner() (gas: 63025)
+[FAIL: ERC20 transfer failed] test_Pause_Blocks_Transfer() (gas: 69440)
+Traces:
+  [69440] TaxedERC20Test::test_Pause_Blocks_Transfer()
+    ├─ [0] VM::prank(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Return]
+    ├─ [27759] TaxedERC20::pause()
+    │   ├─ emit Paused(account: ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Stop]
+    ├─ [0] VM::expectRevert(custom error 0xc31eb0e0: d93c066500000000000000000000000000000000000000000000000000000000)
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Return]
+    ├─ [24356] TaxedERC20::transfer(BOB: [0xa53b369bDCbe05dcBB96d6550C924741902d2615], 100000000000000000000 [1e20])
+    │   └─ ← [Revert] EnforcedPause()
+    └─ ← [Revert] ERC20 transfer failed
+
+[PASS] test_Tax_Transfer_Sends_Fee_To_Collector() (gas: 135415)
+[PASS] test_Whitelist_Exempts_From_Tax() (gas: 141559)
+Suite result: FAILED. 4 passed; 2 failed; 0 skipped; finished in 4.75ms (715.71µs CPU time)
+
+Ran 1 test for test/Integration_Router_TaxedERC20.t.sol:Integration_Router_TaxedERC20
+[FAIL: assertion failed: 400000000000000000 != 0] test_tax_flow_and_router_withdraw() (gas: 255249)
+Traces:
+  [255249] Integration_Router_TaxedERC20::test_tax_flow_and_router_withdraw()
+    ├─ [0] VM::prank(ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916])
+    │   └─ ← [Return]
+    ├─ [90056] TaxedERC20::transfer(BOB: [0xa53b369bDCbe05dcBB96d6550C924741902d2615], 1000000000000000000000 [1e21])
+    │   ├─ emit Transfer(from: ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916], to: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], value: 20000000000000000000 [2e19])
+    │   ├─ emit Transfer(from: ALICE: [0xef211076B8d8b46797E09c9a374Fb4Cdc1dF0916], to: BOB: [0xa53b369bDCbe05dcBB96d6550C924741902d2615], value: 980000000000000000000 [9.8e20])
+    │   └─ ← [Return] true
+    ├─ [2629] TaxedERC20::balanceOf(FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]) [staticcall]
+    │   └─ ← [Return] 20000000000000000000 [2e19]
+    ├─ [0] VM::assertEq(20000000000000000000 [2e19], 20000000000000000000 [2e19]) [staticcall]
+    │   └─ ← [Return]
+    ├─ [2629] TaxedERC20::balanceOf(PLATFORM: [0x54dF0FA419541596844cf138dDf34cab2b2A2c81]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [2629] TaxedERC20::balanceOf(CREATOR: [0xdfA9254271acA18954B4Bd2cFD88C0FAD09f0B25]) [staticcall]
+    │   └─ ← [Return] 0
+    ├─ [114383] FeeRouter::withdraw(TaxedERC20: [0x2e234DAe75C793f67A35089C9d99245E1C58470b])
+    │   ├─ [2629] TaxedERC20::balanceOf(FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]) [staticcall]
+    │   │   └─ ← [Return] 20000000000000000000 [2e19]
+    │   ├─ [47312] TaxedERC20::transfer(PLATFORM: [0x54dF0FA419541596844cf138dDf34cab2b2A2c81], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], value: 200000000000000000 [2e17])
+    │   │   ├─ emit Transfer(from: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: PLATFORM: [0x54dF0FA419541596844cf138dDf34cab2b2A2c81], value: 9800000000000000000 [9.8e18])
+    │   │   └─ ← [Return] true
+    │   ├─ [33712] TaxedERC20::transfer(CREATOR: [0xdfA9254271acA18954B4Bd2cFD88C0FAD09f0B25], 10000000000000000000 [1e19])
+    │   │   ├─ emit Transfer(from: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], value: 200000000000000000 [2e17])
+    │   │   ├─ emit Transfer(from: FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], to: CREATOR: [0xdfA9254271acA18954B4Bd2cFD88C0FAD09f0B25], value: 9800000000000000000 [9.8e18])
+    │   │   └─ ← [Return] true
+    │   ├─ emit Withdraw(token: TaxedERC20: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], platformAmount: 10000000000000000000 [1e19], creatorAmount: 10000000000000000000 [1e19])
+    │   └─ ← [Stop]
+    ├─ [2629] TaxedERC20::balanceOf(FeeRouter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f]) [staticcall]
+    │   └─ ← [Return] 400000000000000000 [4e17]
+    ├─ [0] VM::assertEq(400000000000000000 [4e17], 0) [staticcall]
+    │   └─ ← [Revert] assertion failed: 400000000000000000 != 0
+    └─ ← [Revert] assertion failed: 400000000000000000 != 0
+
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 5.00ms (1.01ms CPU time)
+
+Ran 5 tests for test/TokenFactory.t.sol:TokenFactoryTest
+[PASS] test_Create_Success_And_Event() (gas: 1551625)
+[PASS] test_Revert_NameEmpty() (gas: 36709)
+[PASS] test_Revert_NonOwner_WhenClosed() (gas: 37656)
+[PASS] test_Revert_SupplyZero() (gas: 37082)
+[PASS] test_Revert_SymbolTooLong() (gas: 37164)
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 5.07ms (6.36ms CPU time)
+
+╭--------------------------------------------+-----------------+-------+--------+--------+---------╮
+| contracts/FeeRouter.sol:FeeRouter Contract |                 |       |        |        |         |
++==================================================================================================+
+| Deployment Cost                            | Deployment Size |       |        |        |         |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| 548776                                     | 2428            |       |        |        |         |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+|                                            |                 |       |        |        |         |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| Function Name                              | Min             | Avg   | Median | Max    | # Calls |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| creator                                    | 2327            | 2327  | 2327   | 2327   | 1       |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| platform                                   | 2349            | 2349  | 2349   | 2349   | 1       |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| setBeneficiaries                           | 36127           | 36127 | 36127  | 36127  | 1       |
+|--------------------------------------------+-----------------+-------+--------+--------+---------|
+| withdraw                                   | 84468           | 99425 | 99425  | 114383 | 2       |
+╰--------------------------------------------+-----------------+-------+--------+--------+---------╯
+
+╭----------------------------------------------+-----------------+-------+--------+-------+---------╮
+| contracts/TaxedERC20.sol:TaxedERC20 Contract |                 |       |        |       |         |
++===================================================================================================+
+| Deployment Cost                              | Deployment Size |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| 1637723                                      | 9569            |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+|                                              |                 |       |        |       |         |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| Function Name                                | Min             | Avg   | Median | Max   | # Calls |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| balanceOf                                    | 2629            | 2629  | 2629   | 2629  | 13      |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| decimals                                     | 2446            | 2446  | 2446   | 2446  | 2       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| name                                         | 3263            | 3263  | 3263   | 3263  | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| pause                                        | 27759           | 27759 | 27759  | 27759 | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| setBlacklist                                 | 47867           | 47867 | 47867  | 47867 | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| setTax                                       | 24243           | 27582 | 27582  | 30921 | 2       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| setWhitelist                                 | 24233           | 36044 | 36044  | 47855 | 2       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| symbol                                       | 3350            | 3350  | 3350   | 3350  | 1       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| totalSupply                                  | 2371            | 2371  | 2371   | 2371  | 2       |
+|----------------------------------------------+-----------------+-------+--------+-------+---------|
+| transfer                                     | 24356           | 58348 | 60605  | 90056 | 5       |
+╰----------------------------------------------+-----------------+-------+--------+-------+---------╯
+
+╭--------------------------------------------------+-----------------+--------+--------+---------+---------╮
+| contracts/TokenFactory.sol:TokenFactory Contract |                 |        |        |         |         |
++==========================================================================================================+
+| Deployment Cost                                  | Deployment Size |        |        |         |         |
+|--------------------------------------------------+-----------------+--------+--------+---------+---------|
+| 2447762                                          | 11271           |        |        |         |         |
+|--------------------------------------------------+-----------------+--------+--------+---------+---------|
+|                                                  |                 |        |        |         |         |
+|--------------------------------------------------+-----------------+--------+--------+---------+---------|
+| Function Name                                    | Min             | Avg    | Median | Max     | # Calls |
+|--------------------------------------------------+-----------------+--------+--------+---------+---------|
+| createToken                                      | 25781           | 449198 | 26083  | 1507276 | 7       |
+╰--------------------------------------------------+-----------------+--------+--------+---------+---------╯
+
+╭-----------------------------------------+-----------------+-------+--------+-------+---------╮
+| test/FeeRouter.t.sol:MockERC20 Contract |                 |       |        |       |         |
++==============================================================================================+
+| Deployment Cost                         | Deployment Size |       |        |       |         |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+| 521027                                  | 2408            |       |        |       |         |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+|                                         |                 |       |        |       |         |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+| Function Name                           | Min             | Avg   | Median | Max   | # Calls |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+| balanceOf                               | 2562            | 2562  | 2562   | 2562  | 6       |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+| mint                                    | 68433           | 68433 | 68433  | 68433 | 2       |
+|-----------------------------------------+-----------------+-------+--------+-------+---------|
+| transfer                                | 51632           | 51632 | 51632  | 51632 | 1       |
+╰-----------------------------------------+-----------------+-------+--------+-------+---------╯
+
+
+Ran 5 test suites in 9.07ms (24.18ms CPU time): 13 tests passed, 3 failed, 0 skipped (16 total tests)
+
+Failing tests:
+Encountered 1 failing test in test/Integration_Router_TaxedERC20.t.sol:Integration_Router_TaxedERC20
+[FAIL: assertion failed: 400000000000000000 != 0] test_tax_flow_and_router_withdraw() (gas: 255249)
+
+Encountered 2 failing tests in test/TaxedERC20.t.sol:TaxedERC20Test
+[FAIL: ERC20 transfer failed] test_Blacklist_Blocks_Transfer() (gas: 92261)
+[FAIL: ERC20 transfer failed] test_Pause_Blocks_Transfer() (gas: 69440)
+
+Encountered a total of 3 failing tests, 13 tests succeeded

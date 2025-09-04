@@ -56,3 +56,16 @@ This collection demonstrates comprehensive abilities in backend development, blo
   - Evidence: see Day6 pack above.
 
 For service details or custom extensions, open an issue or contact me.
+
+## Evidence Pack #2 — Router Verified
+
+- **Verify Links:** [evm/docs/evidence/day7/verify-links.md](evm/docs/evidence/day7/verify-links.md)
+- **Addresses:** [evm/docs/evidence/day7/addresses.json](evm/docs/evidence/day7/addresses.json)
+- **Router Artifact:** [evm/docs/evidence/day7/router.json](evm/docs/evidence/day7/router.json)
+- **Tax Config:** [evm/docs/evidence/day7/token-tax.json](evm/docs/evidence/day7/token-tax.json)
+- **Transactions:** [evm/docs/evidence/day7/txs.md](evm/docs/evidence/day7/txs.md)
+- **Withdrawal Result:** [evm/docs/evidence/day7/withdraw.json](evm/docs/evidence/day7/withdraw.json)
+- **Deploy Run:** [evm/docs/evidence/day7/deploy-router-run.json](evm/docs/evidence/day7/deploy-router-run.json)
+- **SetTax Run:** [evm/docs/evidence/day7/set-tax-run.json](evm/docs/evidence/day7/set-tax-run.json)
+- **Withdraw Run:** [evm/docs/evidence/day7/withdraw-run.json](evm/docs/evidence/day7/withdraw-run.json)
+- **Gas Report:** [evm/docs/evidence/day7/gas-day7.txt](evm/docs/evidence/day7/gas-day7.txt)

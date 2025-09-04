@@ -1,53 +1,58 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import "forge-std/Test.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {FeeRouter} from "../contracts/FeeRouter.sol";
 
-contract FeeRouter is AccessControl {
-    // 角色
-    bytes32 public constant FEE_SETTER_ROLE = keccak256("FEE_SETTER_ROLE");
+contract MockERC20 is ERC20 {
+    constructor() ERC20("MockToken", "MOCK") {}
+    function mint(address to, uint256 amount) external { _mint(to, amount); }
+}
 
-    // 受益人
-    address public platform;
-    address public creator;
+contract FeeRouterTest is Test {
+    FeeRouter internal router;
+    MockERC20 internal token;
+    address internal owner;
+    address internal platform;
+    address internal creator;
+    address internal user;
 
-    // 费率：万分比（bps）
-    uint16 public platformBps = 100; // 1%
-    uint16 public creatorBps  = 100; // 1%
-    uint16 public constant MAX_TOTAL_BPS = 500; // 上限 5%
+    function setUp() public {
+        owner    = makeAddr("OWNER");
+        platform = makeAddr("PLATFORM");
+        creator  = makeAddr("CREATOR");
+        user     = makeAddr("USER");
 
-    constructor(address _platform, address _creator) {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(FEE_SETTER_ROLE, msg.sender);
-        platform = _platform;
-        creator  = _creator;
+        vm.startPrank(owner);
+        router = new FeeRouter(platform, creator);
+        vm.stopPrank();
+
+        token = new MockERC20();
+        token.mint(user, 1_000 ether);
     }
 
-    function setFeeRecipients(address _platform, address _creator)
-        external
-        onlyRole(FEE_SETTER_ROLE)
-    {
-        require(_platform != address(0) && _creator != address(0), "zero addr");
-        platform = _platform;
-        creator  = _creator;
+    function test_setBeneficiaries_onlyOwner() public {
+        address p2 = makeAddr("P2");
+        address c2 = makeAddr("C2");
+        vm.prank(owner);
+        router.setBeneficiaries(p2, c2);
+        assertEq(router.platform(), p2);
+        assertEq(router.creator(),  c2);
     }
 
-    function setFees(uint16 _platformBps, uint16 _creatorBps)
-        external
-        onlyRole(FEE_SETTER_ROLE)
-    {
-        require(_platformBps + _creatorBps <= MAX_TOTAL_BPS, "fee too high");
-        platformBps = _platformBps;
-        creatorBps  = _creatorBps;
-    }
+    function test_withdraw_split50_50() public {
+        vm.startPrank(user);
+        require(token.transfer(address(router), 100 ether), "ERC20 transfer failed");
+        vm.stopPrank();
 
-    function totalBps() public view returns (uint16) {
-        return platformBps + creatorBps;
-    }
+        uint256 pBefore = token.balanceOf(platform);
+        uint256 cBefore = token.balanceOf(creator);
 
-    /// @notice 按当前费率对 amount 报价（平台份额, 创作者份额）
-    function quote(uint256 amount) external view returns (uint256 p, uint256 c) {
-        p = (amount * platformBps) / 10_000;
-        c = (amount * creatorBps)  / 10_000;
+        router.withdraw(address(token));
+
+        assertEq(token.balanceOf(platform) - pBefore, 50 ether);
+        assertEq(token.balanceOf(creator)  - cBefore, 50 ether);
+        assertEq(token.balanceOf(address(router)), 0);
     }
 }

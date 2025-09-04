@@ -71,7 +71,7 @@ contract TaxedERC20Test is Test {
         uint256 amt = 2_000 * (10 ** uint256(decs));
 
         vm.prank(alice);
-        token.transfer(bob, amt);
+        require(token.transfer(bob, amt), "ERC20 transfer failed");
 
         assertEq(token.balanceOf(bob), amt, "full amount to bob");
         assertEq(token.balanceOf(collector), 0, "no tax collected");
@@ -86,7 +86,7 @@ contract TaxedERC20Test is Test {
 
         vm.expectRevert(bytes("Blacklisted"));
         vm.prank(alice);
-        token.transfer(bob, amt);
+        require(token.transfer(bob, amt), "ERC20 transfer failed");
     }
 
     // ============ ④ 暂停阻断 ============
@@ -98,7 +98,7 @@ contract TaxedERC20Test is Test {
 
         vm.expectRevert(EnforcedPause.selector);
         vm.prank(alice);
-        token.transfer(bob, amt);
+        require(token.transfer(bob, amt), "ERC20 transfer failed");
     }
 
     // ======== 可选 ⑤：onlyOwner 限制（举两个接口） ========
