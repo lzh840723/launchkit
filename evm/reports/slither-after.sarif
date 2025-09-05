@@ -1,0 +1,167 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Slither",
+          "informationUri": "https://github.com/crytic/slither",
+          "version": "0.11.3",
+          "rules": [
+            {
+              "id": "2-1-timestamp",
+              "name": "timestamp",
+              "properties": {
+                "precision": "high",
+                "security-severity": "3.0"
+              },
+              "shortDescription": {
+                "text": "Block timestamp"
+              },
+              "help": {
+                "text": "Avoid relying on `block.timestamp`."
+              }
+            },
+            {
+              "id": "4-0-immutable-states",
+              "name": "immutable-states",
+              "properties": {
+                "precision": "very-high",
+                "security-severity": "0.0"
+              },
+              "shortDescription": {
+                "text": "State variables that could be declared immutable"
+              },
+              "help": {
+                "text": "Add the `immutable` attribute to state variables that never change or are set only in the constructor."
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "2-1-timestamp",
+          "message": {
+            "text": "VestingVault.releasable() (contracts/VestingVault.sol#124-128) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- vested <= released (contracts/VestingVault.sol#126)\n",
+            "markdown": "[VestingVault.releasable()](contracts/VestingVault.sol#L124-L128) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- [vested <= released](contracts/VestingVault.sol#L126)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/VestingVault.sol"
+                },
+                "region": {
+                  "startLine": 124,
+                  "endLine": 128
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "72e2ff06d68f370442281e017048c70933d2ba05634571476995f113c033bdb1"
+          }
+        },
+        {
+          "ruleId": "2-1-timestamp",
+          "message": {
+            "text": "VestingVault.release(uint256) (contracts/VestingVault.sol#137-151) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- require(bool,string)(avail > 0,nothing to release) (contracts/VestingVault.sol#141)\n\t- (amount == 0 || amount > avail) (contracts/VestingVault.sol#144)\n",
+            "markdown": "[VestingVault.release(uint256)](contracts/VestingVault.sol#L137-L151) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- [require(bool,string)(avail > 0,nothing to release)](contracts/VestingVault.sol#L141)\n\t- [(amount == 0 || amount > avail)](contracts/VestingVault.sol#L144)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/VestingVault.sol"
+                },
+                "region": {
+                  "startLine": 137,
+                  "endLine": 151
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "7ed530f17b4e93d7eb2f8c885e3861b2b2743ec77584f3d6e28040af9340f44c"
+          }
+        },
+        {
+          "ruleId": "2-1-timestamp",
+          "message": {
+            "text": "VestingVault.vestedAmount(uint64) (contracts/VestingVault.sol#114-119) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- ts < start + cliff (contracts/VestingVault.sol#115)\n\t- ts >= start + duration (contracts/VestingVault.sol#116)\n",
+            "markdown": "[VestingVault.vestedAmount(uint64)](contracts/VestingVault.sol#L114-L119) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- [ts < start + cliff](contracts/VestingVault.sol#L115)\n\t- [ts >= start + duration](contracts/VestingVault.sol#L116)\n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/VestingVault.sol"
+                },
+                "region": {
+                  "startLine": 114,
+                  "endLine": 119
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "e0baa8c97da324a8c7879c729127363cde2f637f0fc81a0421114dbff601deb6"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "TaxedERC20._decimals_ (contracts/TaxedERC20.sol#16) should be immutable \n",
+            "markdown": "[TaxedERC20._decimals_](contracts/TaxedERC20.sol#L16) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/TaxedERC20.sol"
+                },
+                "region": {
+                  "startLine": 16,
+                  "endLine": 16
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "d5f37eb182b826b3149ebee07f31e7855f44a2649be8eed571a84cc77191bdae"
+          }
+        },
+        {
+          "ruleId": "4-0-immutable-states",
+          "message": {
+            "text": "TaxedERC20._decimals_ (contracts/TaxedERC20.sol#16) should be immutable \n",
+            "markdown": "[TaxedERC20._decimals_](contracts/TaxedERC20.sol#L16) should be immutable \n"
+          },
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "contracts/TaxedERC20.sol"
+                },
+                "region": {
+                  "startLine": 16,
+                  "endLine": 16
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "id": "d5f37eb182b826b3149ebee07f31e7855f44a2649be8eed571a84cc77191bdae"
+          }
+        }
+      ]
+    }
+  ]
+}
