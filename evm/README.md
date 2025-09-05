@@ -107,3 +107,12 @@ docs/        # Evidence packs
 - Transactions: `evm/docs/evidence/day8/txs.md`
 - Gas: `evm/docs/evidence/day8/gas-day8.txt`
 - Frontend: `vesting-ui/` (Connect + Releasable + Claim)
+
+---
+
+## Day9 — Slither Hardening
+- Evidence: `evm/docs/evidence/day9/summary.md`
+- Before (JSON/MD): `evm/docs/evidence/day9/slither-before.json`, `evm/docs/evidence/day9/slither-before.md`
+- After (JSON/MD): `evm/docs/evidence/day9/slither-after.json`, `evm/docs/evidence/day9/slither-after.md`
+- Diff: `evm/docs/evidence/day9/slither-diff.md`
+- Logs (full): `evm/reports/slither-after-full.md`

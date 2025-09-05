@@ -4,6 +4,7 @@ pragma solidity ^0.8.24;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title VestingVault
@@ -23,7 +24,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
  * - constructor 校验 cliff ≤ duration；duration=0 代表部署后即可全部归属；
  * - 关键参数设为 immutable，部署后不可更改。
  */
-contract VestingVault is Ownable {
+contract VestingVault is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     /// @notice 要发放的 ERC20 代币
@@ -89,12 +90,14 @@ contract VestingVault is Ownable {
      * @param amount 注资代币数量
      *
      * @dev 多次注资会累计到 totalReceived，按同一释放曲线线性归属。
+     *      CEI：先更新状态，再执行外部交互；并用 nonReentrant 防重入。
      */
-    function fund(uint256 amount) external onlyOwner {
+    function fund(uint256 amount) external onlyOwner nonReentrant {
         require(amount > 0, "amount=0");
-        // 从 owner 转入到本合约（需先 approve）
-        token.safeTransferFrom(msg.sender, address(this), amount);
+        // Effects
         totalReceived += amount;
+        // Interactions
+        token.safeTransferFrom(msg.sender, address(this), amount);
         emit Funded(amount);
     }
 
@@ -129,9 +132,9 @@ contract VestingVault is Ownable {
      * @param amount 期望领取数量；若为 0 或大于可领取额度，则领取“全部可领取额度”
      *
      * @dev 访问控制：只有 beneficiary 或 owner 可以触发；
-     *      发放成功后，增加 released，并把代币转给 beneficiary。
+     *      CEI：先更新状态（released），再外部交互；并用 nonReentrant 防重入。
      */
-    function release(uint256 amount) external {
+    function release(uint256 amount) external nonReentrant {
         require(msg.sender == beneficiary || msg.sender == owner(), "not allowed");
 
         uint256 avail = releasable();
@@ -140,7 +143,9 @@ contract VestingVault is Ownable {
         // amount=0 或超额时，按“全部可领取额度”发放
         uint256 toSend = (amount == 0 || amount > avail) ? avail : amount;
 
+        // Effects
         released += toSend;
+        // Interactions
         token.safeTransfer(beneficiary, toSend);
         emit Released(toSend);
     }
