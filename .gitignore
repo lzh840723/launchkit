@@ -43,3 +43,6 @@
 
 # 可选：如果 Foundry 想让 CI 自行安装依赖，再忽略 lib/
 # **/libs/
+
+.gitignore
+evm/.gitignore

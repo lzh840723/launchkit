@@ -8,7 +8,12 @@ broadcast/
 
 # deps（CI 会用 forge install 拉取）
 lib/
+tmp/
 
 # 可选：只忽略 reports 里的大文件
 # reports/*.json
 # reports/*.zip
+
+# demo & logs
+evm/demo.log
+*.log
