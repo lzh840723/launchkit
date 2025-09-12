@@ -68,23 +68,8 @@ forge verify-contract --chain sepolia --constructor-args "$ARGS" \
   contracts/TaxedERC20.sol:TaxedERC20 --watch
 ```
 
-**Evidence Packs**
-
-* Day4: [Evidence (CI)](./evm/docs/evidence/day4/evidence-ci.md)
-* Day5: [Evidence Pack #1](./evm/docs/evidence/day5/pack.md)
-* **Day6**: [Evidence Pack — TaxedERC20 (OZ v5)](./evm/docs/evidence/day6/pack.md)
-* **Day7** (Router Verified):
-
-  * [verify-links.md](./evm/docs/evidence/day7/verify-links.md)
-  * [addresses.json](./evm/docs/evidence/day7/addresses.json)
-  * [router.json](./evm/docs/evidence/day7/router.json)
-  * [token-tax.json](./evm/docs/evidence/day7/token-tax.json)
-  * [txs.md](./evm/docs/evidence/day7/txs.md)
-  * [withdraw.json](./evm/docs/evidence/day7/withdraw.json)
-  * [deploy-router-run.json](./evm/docs/evidence/day7/deploy-router-run.json)
-  * [set-tax-run.json](./evm/docs/evidence/day7/set-tax-run.json)
-  * [withdraw-run.json](./evm/docs/evidence/day7/withdraw-run.json)
-  * [gas-day7.txt](./evm/docs/evidence/day7/gas-day7.txt)
+## EVM — Evidence Packs
+See the consolidated index: **[evm/docs/evidence/](./evm/docs/evidence/README.md)**.
 
 ---
 
