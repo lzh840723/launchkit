@@ -6,66 +6,48 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-/**
- * @title VestingVault
- * @notice 线性释放金库（带 cliff）。支持多次注资累计、按总额线性归属。
- *
- * @dev 业务特性：
- * - 悬崖期（cliff）之前归属为 0；
- * - 悬崖后按 (now - start) / duration 线性归属；
- * - 超过 (start + duration) 后全部归属；
- * - 多次 fund 累计到 totalReceived，统一按同一条曲线释放（不是分批各自曲线）；
- * - beneficiary 或 owner 都可触发 release；amount=0 表示释放全部可释放额度；
- * - 事件：Funded / Released，便于前端与对账。
- *
- * @dev 安全与限制：
- * - onlyOwner 才能 fund（需要先 approve 本合约）；
- * - 使用 SafeERC20 兼容非标准 ERC20；
- * - constructor 校验 cliff ≤ duration；duration=0 代表部署后即可全部归属；
- * - 关键参数设为 immutable，部署后不可更改。
- */
+/// @title VestingVault
+/// @notice Linear vesting vault for an ERC20 with a cliff. The owner funds the vault,
+///         and the beneficiary (or owner) can release vested tokens over time.
+/// @dev
+/// - Time values are unix timestamps in seconds (uint64).
+/// - Vested amount is 0 before `start + cliff`; after `start + duration` the entire
+///   `totalReceived` is vested; otherwise it vests linearly by `(ts - start)/duration`.
+/// - Additional funding increases `totalReceived` and vests pro-rata under the same schedule.
+/// - No revoke/stop logic. Uses {ReentrancyGuard} and {SafeERC20}.
 contract VestingVault is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
-    /// @notice 要发放的 ERC20 代币
+    /// @notice ERC20 token being vested.
     IERC20  public immutable token;
-
-    /// @notice 受益人地址（领取者）
+    /// @notice Recipient of vested tokens.
     address public immutable beneficiary;
-
-    /// @notice 线性释放起始时间戳（Unix）
+    /// @notice Vesting start timestamp (unix seconds).
     uint64  public immutable start;
-
-    /// @notice 总释放时长（秒）
+    /// @notice Total vesting duration in seconds (linear).
     uint64  public immutable duration;
-
-    /// @notice 悬崖期时长（从 start 起算，秒）
+    /// @notice Cliff length in seconds (no vesting before start + cliff).
     uint64  public immutable cliff;
 
-    /// @notice 累计注资总额（所有 fund 之和）
+    /// @notice Cumulative amount ever funded into the vault.
     uint256 public totalReceived;
-
-    /// @notice 累计已释放总额
+    /// @notice Cumulative amount already released to the beneficiary.
     uint256 public released;
 
-    /// @notice 注资成功事件（amount 为本次注资额）
+    /// @notice Emitted when the vault receives additional funding.
+    /// @param amount Amount pulled from the funder.
     event Funded(uint256 amount);
 
-    /// @notice 释放成功事件（amount 为本次释放额）
+    /// @notice Emitted when vested tokens are released to the beneficiary.
+    /// @param amount Amount sent out.
     event Released(uint256 amount);
 
-    /**
-     * @param _token         要发放的 ERC20
-     * @param _beneficiary   受益人
-     * @param _start         释放起始时间
-     * @param _duration      总释放时长
-     * @param _cliff         悬崖期（从 _start 起算）
-     * @param _initialOwner  合约 owner 初始地址（通常为多签/项目方）
-     *
-     * @dev 要求：
-     * - _token / _beneficiary 非零地址；
-     * - _cliff ≤ _duration（允许 _duration=0，即部署后即可全部归属）；
-     */
+    /// @param _token         ERC20 token to vest (non-zero address).
+    /// @param _beneficiary   Recipient of vested tokens (non-zero).
+    /// @param _start         Vesting start timestamp.
+    /// @param _duration      Linear vesting duration (seconds).
+    /// @param _cliff         Cliff length (seconds), must be ≤ duration.
+    /// @param _initialOwner  Contract owner (authorized to fund).
     constructor(
         IERC20 _token,
         address _beneficiary,
@@ -85,13 +67,9 @@ contract VestingVault is Ownable, ReentrancyGuard {
         cliff = _cliff;
     }
 
-    /**
-     * @notice owner 注资（调用前需对本合约 approve）
-     * @param amount 注资代币数量
-     *
-     * @dev 多次注资会累计到 totalReceived，按同一释放曲线线性归属。
-     *      CEI：先更新状态，再执行外部交互；并用 nonReentrant 防重入。
-     */
+    /// @notice Fund the vault by pulling `amount` tokens from the caller (owner).
+    /// @dev Requires prior `approve` on the token. CEI pattern + nonReentrant.
+    /// @param amount Amount to add to the vesting pool (must be > 0).
     function fund(uint256 amount) external onlyOwner nonReentrant {
         require(amount > 0, "amount=0");
         // Effects
@@ -101,51 +79,37 @@ contract VestingVault is Ownable, ReentrancyGuard {
         emit Funded(amount);
     }
 
-    /**
-     * @notice 计算某个时间点 ts 的累计归属额度（不考虑已领取）
-     * @param ts 时间戳（Unix）
-     * @return 已归属的代币总额（<= totalReceived）
-     *
-     * @dev 规则：
-     * - ts < start + cliff    => 0
-     * - ts >= start + duration => totalReceived（全部归属）
-     * - 其他 => totalReceived * (ts - start) / duration（线性）
-     */
+    /// @notice Compute how many tokens are vested at a specific timestamp.
+    /// @dev Returns 0 before `start + cliff`. Caps at `totalReceived` after `start + duration`.
+    /// @param ts Timestamp to evaluate (unix seconds).
+    /// @return Amount vested by `ts`.
     function vestedAmount(uint64 ts) public view returns (uint256) {
         if (ts < start + cliff) return 0;
         if (ts >= start + duration) return totalReceived;
-        // 线性插值（uint256 运算，0.8+ 自动检查溢出）
         return (totalReceived * (ts - start)) / duration;
     }
 
-    /**
-     * @notice 当前可领取额度（= 已归属 - 已领取，最少为 0）
-     */
+    /// @notice Amount currently releasable to the beneficiary (`vested - released`).
     function releasable() public view returns (uint256) {
         uint256 vested = vestedAmount(uint64(block.timestamp));
         if (vested <= released) return 0;
         return vested - released;
     }
 
-    /**
-     * @notice 领取已归属的代币
-     * @param amount 期望领取数量；若为 0 或大于可领取额度，则领取“全部可领取额度”
-     *
-     * @dev 访问控制：只有 beneficiary 或 owner 可以触发；
-     *      CEI：先更新状态（released），再外部交互；并用 nonReentrant 防重入。
-     */
+    /// @notice Release vested tokens to the beneficiary.
+    /// @dev Callable by the beneficiary or the owner. If `amount` is 0 or exceeds
+    ///      the available amount, releases the full `releasable()` value.
+    ///      NonReentrant; uses SafeERC20; updates state before transfer.
+    /// @param amount Amount to release; pass 0 to release all currently available.
     function release(uint256 amount) external nonReentrant {
         require(msg.sender == beneficiary || msg.sender == owner(), "not allowed");
 
         uint256 avail = releasable();
         require(avail > 0, "nothing to release");
 
-        // amount=0 或超额时，按“全部可领取额度”发放
         uint256 toSend = (amount == 0 || amount > avail) ? avail : amount;
 
-        // Effects
         released += toSend;
-        // Interactions
         token.safeTransfer(beneficiary, toSend);
         emit Released(toSend);
     }

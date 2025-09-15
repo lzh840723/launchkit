@@ -5,17 +5,30 @@ import "forge-std/Script.sol";
 import "forge-std/console2.sol";
 import {TokenFactory} from "../contracts/TokenFactory.sol";
 
-/// @notice 通过已部署的 Factory 创建 1 个 TaxedERC20（Factory 内部固定 2% 税）
+/// @title CreateOneToken (Foundry Script)
+/// @notice Uses an already deployed {TokenFactory} to create a single TaxedERC20.
+/// @dev The factory sets tax to 2% (200 bps).
+/// Environment variables expected (.env):
+/// - TOKEN_FACTORY  : deployed factory address
+/// - NAME           : token name
+/// - SYMBOL         : token symbol (≤ 11 chars)
+/// - DECIMALS       : decimals (6–18)
+/// - INITIAL_SUPPLY : initial supply in base units (scaled by 10**DECIMALS)
+/// - TOKEN_OWNER    : initial owner & initial mint recipient
+/// - PRIVATE_KEY    : broadcaster’s private key (must be funded for gas)
+/// Logs printed: factory address, new token address, owner, name/symbol, decimals, supply.
 contract CreateOneToken is Script {
+    /// @notice Execute the factory call to create one token.
+    /// @dev Flow: load env → startBroadcast → factory.createToken(...) → stopBroadcast → log details.
     function run() external {
-        // ---- 读取 .env ----
-        address factoryAddr   = vm.envAddress("TOKEN_FACTORY");   // 工厂地址（已部署）
-        string memory name_   = vm.envString("NAME");              // 代币名
-        string memory symbol_ = vm.envString("SYMBOL");            // 符号
-        uint8 decimals_       = uint8(vm.envUint("DECIMALS"));     // 6~18
-        uint256 initialSupply_= vm.envUint("INITIAL_SUPPLY");      // 按 decimals_ 计
-        address tokenOwner_   = vm.envAddress("TOKEN_OWNER");      // 新代币 owner/接收初始量
-        uint256 pk            = vm.envUint("PRIVATE_KEY");         // 发送交易用私钥
+        // ---- Load from .env ----
+        address factoryAddr    = vm.envAddress("TOKEN_FACTORY");   // Deployed factory
+        string memory name_    = vm.envString("NAME");             // Token name
+        string memory symbol_  = vm.envString("SYMBOL");           // Symbol
+        uint8 decimals_        = uint8(vm.envUint("DECIMALS"));    // 6–18
+        uint256 initialSupply_ = vm.envUint("INITIAL_SUPPLY");     // Base units (scaled)
+        address tokenOwner_    = vm.envAddress("TOKEN_OWNER");     // New token owner / initial recipient
+        uint256 pk             = vm.envUint("PRIVATE_KEY");        // Private key for broadcasting
 
         vm.startBroadcast(pk);
         address newToken = TokenFactory(factoryAddr).createToken(
