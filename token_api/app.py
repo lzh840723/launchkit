@@ -28,10 +28,10 @@ ERC20_ABI = [
 
 app = FastAPI(title="Token API", version="1.0.0")
 
-# --- CORS (允许本地调试或你的前端域名) ---
+# --- CORS (allow local debugging or your frontend domains) ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 生产可改为具体域名
+    allow_origins=["*"],  # In production, restrict to specific domains
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,10 +40,14 @@ app.add_middleware(
 security = HTTPBearer()
 
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """
+    Verify a JWT from the Authorization header (HTTP Bearer).
+    Returns the decoded payload on success, otherwise raises HTTP 403.
+    """
     token = credentials.credentials
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        # 允许后续读取用户信息：payload.get("user")
+        # Payload can be accessed later, e.g., payload.get("user")
         return payload
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=403, detail="Token expired")
@@ -51,18 +55,32 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
         raise HTTPException(status_code=403, detail="Invalid token")
 
 def to_checksum(addr: str) -> str:
+    """
+    Validate an Ethereum address and return its EIP-55 checksum format.
+    Raises HTTP 400 if the address is invalid.
+    """
     if not w3.is_address(addr):
         raise HTTPException(status_code=400, detail="Invalid address")
     return w3.to_checksum_address(addr)
 
 @app.get("/health")
 def health():
+    """
+    Simple health check for the RPC connection.
+    Returns ok status, current chain_id (if connected), and RPC label.
+    """
     ok = w3.is_connected()
     chain_id = w3.eth.chain_id if ok else None
     return {"ok": ok, "chain_id": chain_id, "rpc": "infura-mainnet"}
 
 @app.get("/balance")
 def balance(contract: str, owner: str, user=Depends(verify_token)):
+    """
+    Return the ERC-20 token balance for a given owner address.
+    - Resolves contract and owner to checksum addresses
+    - Calls balanceOf(owner)
+    - Attempts to read decimals and symbol (with safe fallbacks)
+    """
     caddr = to_checksum(contract)
     oaddr = to_checksum(owner)
     c = w3.eth.contract(address=caddr, abi=ERC20_ABI)
