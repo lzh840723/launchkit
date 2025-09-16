@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
       POSTGRES_DB: ${POSTGRES_DB:-blockchain_db}
     ports:
-      - "5433:5432"   # 本机5433 → 容器5432
+      - "5433:5432"   # Host port 5433 → Container port 5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
